@@ -3,6 +3,7 @@ package com.wordpress.faeldi.atividadeprogramacaowebii.service.impl;
 import com.wordpress.faeldi.atividadeprogramacaowebii.model.dto.LivroDTO;
 import com.wordpress.faeldi.atividadeprogramacaowebii.model.entity.Livro;
 import com.wordpress.faeldi.atividadeprogramacaowebii.model.mapper.LivroMapper;
+import com.wordpress.faeldi.atividadeprogramacaowebii.repository.LivroFilterRepository;
 import com.wordpress.faeldi.atividadeprogramacaowebii.repository.LivroRepository;
 import com.wordpress.faeldi.atividadeprogramacaowebii.service.LivroService;
 import jakarta.persistence.EntityNotFoundException;
@@ -17,6 +18,9 @@ public class LivroServiceImpl implements LivroService {
 
     @Autowired
     private LivroRepository repository;
+
+    @Autowired
+    private LivroFilterRepository livroFilterRepository;
 
     @Autowired
     private LivroMapper mapper;
@@ -67,5 +71,19 @@ public class LivroServiceImpl implements LivroService {
         }
 
         repository.deleteById(id);
+    }
+
+    @Override
+    public List<LivroDTO> buscarPorNome(String nome) {
+        List<Livro> produtos = livroFilterRepository.buscarPorNome(nome);
+
+        return mapper.parseListDTO(produtos);
+    }
+
+    @Override
+    public List<LivroDTO> buscarPorIsbn(String isbn) {
+        List<Livro> produtos = livroFilterRepository.buscarPorIsbn(isbn);
+
+        return mapper.parseListDTO(produtos);
     }
 }

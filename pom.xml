@@ -163,7 +163,7 @@
 						<configuration>
 							<includes>
 								<include>common.persistence.entity.**</include>
-								<include>tech.ada.aula.web.model.entity.**</include>
+								<include>com.wordpress.faeldi.atividadeprogramacaowebii.model.entity.**</include>
 							</includes>
 						</configuration>
 					</execution>

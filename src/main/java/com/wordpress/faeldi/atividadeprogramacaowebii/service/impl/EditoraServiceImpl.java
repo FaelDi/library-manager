@@ -1,17 +1,17 @@
 package com.wordpress.faeldi.atividadeprogramacaowebii.service.impl;
 
-import com.wordpress.faeldi.atividadeprogramacaowebii.model.dto.EditoraDTO;
+import com.wordpress.faeldi.atividadeprogramacaowebii.model.dto.CategoriaLivrosDTO;
 import com.wordpress.faeldi.atividadeprogramacaowebii.model.dto.EditoraDTO;
 import com.wordpress.faeldi.atividadeprogramacaowebii.model.entity.Editora;
+import com.wordpress.faeldi.atividadeprogramacaowebii.model.entity.Livro;
 import com.wordpress.faeldi.atividadeprogramacaowebii.model.mapper.EditoraMapper;
+import com.wordpress.faeldi.atividadeprogramacaowebii.model.mapper.LivroMapper;
 import com.wordpress.faeldi.atividadeprogramacaowebii.repository.EditoraRepository;
-import com.wordpress.faeldi.atividadeprogramacaowebii.repository.EditoraRepository;
+import com.wordpress.faeldi.atividadeprogramacaowebii.repository.LivroFilterRepository;
 import com.wordpress.faeldi.atividadeprogramacaowebii.service.EditoraService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -22,7 +22,13 @@ public class EditoraServiceImpl implements EditoraService {
     private EditoraRepository repository;
 
     @Autowired
+    private LivroFilterRepository livroFilterRepository;
+
+    @Autowired
     private EditoraMapper mapper;
+
+    @Autowired
+    private LivroMapper livroMapper;
 
     @Override
     public List<EditoraDTO> buscarTodos() {
@@ -38,6 +44,17 @@ public class EditoraServiceImpl implements EditoraService {
         }
 
         throw new EntityNotFoundException();
+    }
+
+    @Override
+    public CategoriaLivrosDTO buscarLivrosPorEditora(Long editora_id){
+        EditoraDTO editoraDTO = buscarUm(editora_id);
+        List<Livro> livros = livroFilterRepository.filtrar(editora_id);
+        CategoriaLivrosDTO categoriaLivrosDTO = new CategoriaLivrosDTO();
+        categoriaLivrosDTO.setId(editoraDTO.getId());
+        categoriaLivrosDTO.setNome(editoraDTO.getNome());
+        categoriaLivrosDTO.setLivros(livroMapper.parseListDTO(livros));
+        return categoriaLivrosDTO;
     }
 
     @Override
