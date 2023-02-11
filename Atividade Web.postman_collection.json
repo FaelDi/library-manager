@@ -1,0 +1,359 @@
+{
+	"info": {
+		"_postman_id": "e8330402-9fe9-4a56-b826-023f021d84d0",
+		"name": "Atividade Web",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Criar usuarios",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"faeldi\",\r\n    \"password\":\"123456\",\r\n    \"id\": 1,\r\n    \"nome\": \"Rafael Dias Ferreira\",\r\n    \"email\": \"d_rafael@rocketmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "127.0.0.1:8080/usuarios",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Autenticar usuario",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var json = pm.response.json();\r",
+							"var token = json.token;\r",
+							"pm.globals.unset(\"Authorization\");\r",
+							"pm.globals.set(\"Authorization\",\"Bearer \"+token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"faeldi\",\r\n    \"password\":\"123456\",\r\n    \"id\": 1,\r\n    \"nome\": \"Rafael Dias Ferreira\",\r\n    \"email\": \"d_rafael@rocketmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "127.0.0.1:8080/usuarios/auth",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios",
+						"auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Criar Editora",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{Authorization}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome\":\"Stephenie Meyer\",\r\n    \"descricao\":\"sonhou com a saga\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/editora",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"editora"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Criar Categoria",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{Authorization}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome\":\"Ficção\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/categoria",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"categoria"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Criar Livro",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{Authorization}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"categoria\":{\r\n        \"id\": 1,\r\n        \"nome\":\"Ficção\"\r\n    },\r\n    \"editora\":    {\r\n        \"id\": 1,\r\n        \"descricao\": \"sonhou com a saga\",\r\n        \"nome\": \"Stephenie Meyer\"\r\n    },\r\n    \"isbn\": \"9783646702232\",\r\n     \"nome\":\"Crepúsculo 2\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/livro",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"livro"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar Editora",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{Authorization}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/editora",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"editora"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar Livros por Editora",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{Authorization}}",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/editora/1/livros",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"editora",
+						"1",
+						"livros"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar Livros",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{Authorization}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/livro",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"livro"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar Livros por nome",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{Authorization}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/livro/nome/crepúsculo",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"livro",
+						"nome",
+						"crepúsculo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar Livros por isbn",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{Authorization}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/livro/isbn/9783646702232",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"livro",
+						"isbn",
+						"9783646702232"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar Categorias",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{Authorization}}",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/categoria",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"categoria"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar Livros por categoria",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{Authorization}}",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/categoria/1/livros",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"categoria",
+						"1",
+						"livros"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
