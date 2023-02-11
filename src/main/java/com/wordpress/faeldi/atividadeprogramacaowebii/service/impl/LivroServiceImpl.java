@@ -28,10 +28,10 @@ public class LivroServiceImpl implements LivroService {
 
     @Override
     public LivroDTO buscarUm(Long id) {
-        Optional<Livro> LivroOp = repository.findById(id);
-        if(LivroOp.isPresent()) {
-            Livro Livro = LivroOp.get();
-            return mapper.parseDTO(Livro);
+        Optional<Livro> livroOp = repository.findById(id);
+        if(livroOp.isPresent()) {
+            Livro livro = livroOp.get();
+            return mapper.parseDTO(livro);
         }
 
         throw new EntityNotFoundException();
@@ -39,22 +39,22 @@ public class LivroServiceImpl implements LivroService {
 
     @Override
     public LivroDTO criar(LivroDTO LivroDTO) {
-        Livro Livro = mapper.parseEntity(LivroDTO);
+        Livro livro = mapper.parseEntity(LivroDTO);
 
-        Livro.setNome(LivroDTO.getNome());
+        livro.setNome(LivroDTO.getNome());
 
-        Livro.setId(null);
-        repository.save(Livro);
-        return mapper.parseDTO(Livro);
+        livro.setId(null);
+        repository.save(livro);
+        return mapper.parseDTO(livro);
     }
 
     @Override
     public LivroDTO editar(Long id, LivroDTO LivroDTO) {
         if(repository.existsById(id)) {
-            Livro Livro = mapper.parseEntity(LivroDTO);
-            Livro.setId(id);
-            Livro = repository.save(Livro);
-            return mapper.parseDTO(Livro);
+            Livro livro = mapper.parseEntity(LivroDTO);
+            livro.setId(id);
+            livro = repository.save(livro);
+            return mapper.parseDTO(livro);
         }
 
         throw new EntityNotFoundException();

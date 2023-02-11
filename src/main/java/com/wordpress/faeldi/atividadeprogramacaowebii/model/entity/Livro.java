@@ -18,6 +18,14 @@ public class Livro {
 
     @Column(name="nome", nullable=false, unique=true)
     private String nome ;
+
+    @JoinColumn(name = "categoria_id", nullable = false)
+    @ManyToOne()
+    private Categoria categoria;
+
+    @JoinColumn(name = "editora_id", nullable = false)
+    @ManyToOne()
+    private Editora editora;
     @Column(name="isbn", nullable=false, unique=true, length = 13)
     private String isbn;
 }
