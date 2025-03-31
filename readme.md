@@ -1,3 +1,3 @@
-Collection do postman está no repositório
+ostman collection is in the repository
 
 Atividade Web.postman_collection.json
